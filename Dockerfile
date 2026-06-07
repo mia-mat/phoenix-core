@@ -39,6 +39,8 @@ LABEL internal-port="8080"
 LABEL phoenix.source="phoenix.mia.ws"
 LABEL phoenix.self="true"
 
+LABEL arachne.name="Phoenix"
+
 # Copy the built JAR from build stage
 COPY --from=build /app/target/*.jar ./app.jar
 

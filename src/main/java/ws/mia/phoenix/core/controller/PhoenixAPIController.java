@@ -2,6 +2,7 @@ package ws.mia.phoenix.core.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -18,11 +19,12 @@ import ws.mia.phoenix.core.routing.RouteService;
 @RequestMapping("/api")
 public class PhoenixAPIController {
 
-	private static final Logger log = LoggerFactory.getLogger(PhoenixAPIController.class);
 	private final RouteService routeService;
+	private final BuildProperties buildProperties;
 
-	public PhoenixAPIController(RouteService routeService) {
+	public PhoenixAPIController(RouteService routeService, BuildProperties buildProperties) {
 		this.routeService = routeService;
+		this.buildProperties = buildProperties;
 	}
 
 	@PostMapping("flush-route-cache")
@@ -97,6 +99,11 @@ public class PhoenixAPIController {
 	@GetMapping("route-exists")
 	public Mono<Boolean> routeExists(@RequestParam(required = false) String source) {
 		return routeService.routeExists(source);
+	}
+
+	@GetMapping(value = "version", produces = "text/plain")
+	public String getVersion() {
+		return buildProperties.getVersion();
 	}
 
 	@PostMapping("ping")
