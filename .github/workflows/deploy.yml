@@ -1,0 +1,13 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    uses: mia-mat/.github/.github/workflows/poseidon-deploy.yml@master
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
